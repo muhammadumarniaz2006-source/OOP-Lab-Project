@@ -1,9 +1,9 @@
 #include<lib/classes.hpp>
-#include<stdio.h>
+#include<iostream>
 
 using namespace std;
 
 int main(){
-    cout << ;
+    cout <<"hello daddy" ;
     return 0;
 }
