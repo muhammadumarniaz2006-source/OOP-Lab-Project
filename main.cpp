@@ -1,5 +1,5 @@
 #include<lib/classes.hpp>
-#include<stdio.h>
+#include<iostream>
 
 using namespace std;
 
