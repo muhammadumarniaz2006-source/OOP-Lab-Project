@@ -17,10 +17,10 @@ Report your daily work with day number in your own .md file.
 1. git pull
 
 # Git commands to push:
-1. git add .
+1. git add .                                // git commit -am "ABC"
 2. git commit -m "Your changes"
-3. git push origin main
-
+3. git checkout -b your name
+4. git push -u origin your name
 # Command to run project:
 
 
