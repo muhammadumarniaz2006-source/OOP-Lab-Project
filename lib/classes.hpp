@@ -4,11 +4,7 @@
 
 using namespace std;
 class Piece;
-enum class Color
-{
-    WHITE,
-    BLACK,
-};
+enum class Color { WHITE, BLACK };
 typedef struct
 {
     int x;
@@ -42,36 +38,30 @@ public:
         }
     }
 }
-void Board::initializeBoard()
+void initializeBoard()
 {
    
     for (int c = 0; c < 8; c++)
     {
-        squares[1][c] = new Pawn(BLACK);
-        squares[6][c] = new Pawn(WHITE);
+        squares[1][c] = new Pawn(Color::BLACK);
+        squares[6][c] = new Pawn(Color::WHITE);
     }
-
-    squares[0][0] = new Rook(Black);
-    squares[0][7] = new Rook(BLACK);
-    squares[7][0] = new Rook(WHITE);
-    squares[7][7] = new Rook(WHITE);
-
-    squares[0][1] = new Knight(BLACK);
-    squares[0][6] = new Knight(BLACK);
-    squares[7][1] = new Knight(WHITE);
-    squares[7][6] = new Knight(WHITE);
-
-    squares[0][2] = new Bishop(BLACK);
-    squares[0][5] = new Bishop(BLACK);
-    squares[7][2] = new Bishop(WHITE);
-    squares[7][5] = new Bishop(WHITE);
-
-    
-    squares[0][3] = new Queen(BLACK);
-    squares[7][3] = new Queen(WHITE);
-
-    squares[0][4] = new King(BLACK);
-    squares[7][4] = new King(WHITE);
+    squares[0][0] = new Rook(Color::BLACK);
+    squares[0][7] = new Rook(Color::BLACK);
+    squares[7][0] = new Rook(Color::WHITE);
+    squares[7][7] = new Rook(Color::WHITE);
+    squares[0][1] = new Knight(Color::BLACK);
+    squares[0][6] = new Knight(Color::BLACK);
+    squares[7][1] = new Knight(Color::WHITE);
+    squares[7][6] = new Knight(Color::WHITE);
+    squares[0][2] = new Bishop(Color::BLACK);
+    squares[0][5] = new Bishop(Color::BLACK);
+    squares[7][2] = new Bishop(Color::WHITE);
+    squares[7][5] = new Bishop(Color::WHITE);
+    squares[0][3] = new Queen(Color::BLACK);
+    squares[7][3] = new Queen(Color::WHITE);
+    squares[0][4] = new King(Color::BLACK);
+    squares[7][4] = new King(Color::WHITE);
 }
     bool isempty(int row, int col)
     {
@@ -115,6 +105,7 @@ public:
 };
 class Bishop : public Piece
 {
+    Bishop{}
     bool isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &board)
     {
         int rowdiff = fromRow - toRow;
