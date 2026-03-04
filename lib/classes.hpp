@@ -94,6 +94,7 @@ public:
     Color color;
     Board *board;
     string name;
+    Piece(){}
     int *possibleMoves()
     {
         int arr[5]; // example func
@@ -105,7 +106,8 @@ public:
 };
 class Bishop : public Piece
 {
-    Bishop{}
+    public:
+    Bishop():Piece(){}
     bool isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &board)
     {
         int rowdiff = fromRow - toRow;
