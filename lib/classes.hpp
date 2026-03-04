@@ -95,7 +95,7 @@ public:
     Color getcolor(){
         return color;
     }
-};
+}; 
 
 class Bishop : public Piece
 {
