@@ -1,31 +1,38 @@
-#include<string>
-#include<iostream>
-#include "Board.hpp"
+#pragma once
+
+#include <iostream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
 enum class Color { WHITE, BLACK };
 
-typedef struct {
+struct Pos {
     int x;
     int y;
-} Pos;
+};
 
-class Piece{
-private:
+class Board; // Forward declaration
+
+class Piece {
+protected:
     Pos pos;
+    Color color;
+    Board* board;
+    string name;
 
 public:
-    Color color;
-    Board *board;
-    string name;
-    Piece(){}
-    int *possibleMoves()
-    {
-        int arr[5]; // example func
-        return arr;
-    }
-    Color getcolor(){
+    Piece(Color c) : color(c), board(nullptr) {}
+    virtual ~Piece() {}
+
+    virtual bool isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &board) = 0;
+
+    Color getcolor() const {
         return color;
     }
-}; 
+
+    void setBoard(Board* b) {
+        board = b;
+    }
+};
