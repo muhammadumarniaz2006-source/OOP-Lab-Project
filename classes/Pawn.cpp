@@ -1,7 +1,6 @@
 #include "Pawn.hpp"
 
-
-Pawn::Pawn():Piece()
+Pawn::Pawn(Color c): Piece(c)
 {
     first_move=true;
     move_two_square=false;
