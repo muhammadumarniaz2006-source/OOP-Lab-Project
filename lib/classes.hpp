@@ -1,21 +1,10 @@
-#include<stdio.h>
-#include<string>
+#pragma once
 
-using namespace std;
-
-typedef struct{
-    int x;
-    int y;
-} Pos;
-
-class Piece{
-    private:
-        Pos pos;
-    public:
-        string name;
-        int* possibleMoves(){
-            int arr[5];  //example func
-            return arr;
-        }
-        
-};
+#include "../classes/Piece.hpp"
+#include "../classes/Board.hpp"
+#include "../classes/Pawn.hpp"
+#include "../classes/Rook.hpp"
+#include "../classes/Knight.hpp"
+#include "../classes/Bishop.hpp"
+#include "../classes/Queen.hpp"
+#include "../classes/King.hpp"
