@@ -2,8 +2,6 @@
 
 #include "Piece.hpp"
 
-class Piece;
-
 class Board {
 public:
     Piece *squares[8][8];

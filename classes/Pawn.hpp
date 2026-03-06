@@ -3,11 +3,13 @@
 #include "Piece.hpp"
 #include "Board.hpp"
 
-class Pawn : public Piece {
+class Pawn : public Piece
+{
+private:
+    bool first_move;
+    bool move_two_square;
+
 public:
-    Pawn(Color c) : Piece(c) {}
-    bool isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &board) override {
-        // Basic Pawn logic placeholder
-        return true;
-    }
+    Pawn();
+    bool isvalidmove(int from_row,int from_col,int to_row, int to_col, Board &board);
 };
