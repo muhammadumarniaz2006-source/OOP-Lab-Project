@@ -72,24 +72,24 @@ bool Board::hasOpponent(int row, int col, Color myColor) const {
 
 void Board::print_board()
 {
-    cout<<endl<< "   1 2 3 4 5 6 7 8"<<endl;
-    cout<< "   ---------------"<<endl;
-    for(int i=0; i<8; i++)
+    string line = "   +---+---+---+---+---+---+---+---+";
+
+    cout << endl << "     1   2   3   4   5   6   7   8" << endl;
+    cout << line << endl;
+
+    for (int i = 0; i < 8; i++)
     {
-        cout<< (8-i) <<"| ";
-        for(int j=0; j<8; j++)
+        cout << " " << (8-i) << " |";
+        for (int j = 0; j < 8; j++)
         {
-            if(squares[i][j]==nullptr)
-            {
-                cout<<". ";     //jahan empty hai wahan dot ajaye
-            }
+            if (squares[i][j] == nullptr)
+                cout << " . |";
             else
-            {
-                cout<<squares[i][j]->getsymbol() <<" ";     // getsymbol() ka func har class mai banaya hai jahan se woh har piece ka symbol access karke dega
-            }
+                cout << " " << squares[i][j]->getsymbol() << " |";
         }
-        cout<< "|" << (8-i) <<endl;
+        cout << " " << (8-i) << endl;
+        cout << line << endl;
     }
-    cout<< "   ---------------\n";
-    cout<< "   1 2 3 4 5 6 7 8"<<endl;
+
+    cout << "     1   2   3   4   5   6   7   8" << endl;
 }
