@@ -81,11 +81,11 @@ void Board::print_board()
         {
             if(squares[i][j]==nullptr)
             {
-                cout<<". ";
+                cout<<". ";     //jahan empty hai wahan dot ajaye
             }
             else
             {
-                cout<<squares[i][j]->getsymbol() <<" ";
+                cout<<squares[i][j]->getsymbol() <<" ";     // getsymbol() ka func har class mai banaya hai jahan se woh har piece ka symbol access karke dega
             }
         }
         cout<< "|" << (8-i) <<endl;
