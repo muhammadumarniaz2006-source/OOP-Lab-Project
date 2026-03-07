@@ -9,5 +9,5 @@ public:
 
     bool isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &board) override;
 
-    string getsymbol();
+    char getsymbol();
 };

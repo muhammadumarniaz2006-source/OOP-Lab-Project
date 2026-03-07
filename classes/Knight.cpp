@@ -1,9 +1,5 @@
 #include"Knight.hpp"
 
-string Knight::getsymbol()
-{
-    if (getcolor() == Color::WHITE)
-        return "♘";
-    else
-        return "♞";
+char Knight::getsymbol(){
+  return (getcolor() == Color::WHITE) ? 'N' : 'n'; 
 }

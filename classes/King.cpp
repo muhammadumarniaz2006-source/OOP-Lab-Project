@@ -1,9 +1,5 @@
 #include "King.hpp" 
 
-string King::getsymbol()
-{
-    if (getcolor() == Color::WHITE)
-        return "♔";
-    else
-        return "♚";
+char King::getsymbol() { 
+  return (getcolor() == Color::WHITE) ? 'K' : 'k'; 
 }

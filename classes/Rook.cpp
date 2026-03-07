@@ -29,10 +29,6 @@ bool Rook::isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &bo
 
 }
 
-string Rook::getsymbol()
-{
-    if (getcolor() == Color::WHITE)
-        return "♖";
-    else
-        return "♜";
+char Rook::getsymbol(){ 
+    return (getcolor() == Color::WHITE) ? 'R' : 'r'; 
 }

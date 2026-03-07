@@ -23,10 +23,6 @@ bool Bishop::isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &
 
 }
 
-string Bishop::getsymbol()
-{
-    if (getcolor() == Color::WHITE)
-        return "♗";
-    else
-        return "♝";
+char Bishop::getsymbol() { 
+  return (getcolor() == Color::WHITE) ? 'B' : 'b'; 
 }

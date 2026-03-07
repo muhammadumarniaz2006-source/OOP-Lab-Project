@@ -5,7 +5,6 @@ using namespace std;
 
 
 //g++ main.cpp classes/*.cpp -o main
-//chcp 65001
 int main() {
     Board board;
     board.initBoard();

@@ -11,5 +11,5 @@ public:
         return true;
     }
 
-    string getsymbol();
+    char getsymbol();
 };

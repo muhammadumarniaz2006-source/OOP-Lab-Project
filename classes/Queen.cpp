@@ -1,8 +1,5 @@
 #include "Queen.hpp"
-string Queen::getsymbol()
-{
-    if (getcolor() == Color::WHITE)
-        return "♕";
-    else
-        return "♛";
+
+char Queen::getsymbol(){ 
+  return (getcolor() == Color::WHITE) ? 'Q' : 'q'; 
 }

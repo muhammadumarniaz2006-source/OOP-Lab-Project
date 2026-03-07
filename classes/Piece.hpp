@@ -36,5 +36,5 @@ public:
         board = b;
     }
 
-    virtual string getsymbol()=0;
+    virtual char getsymbol()=0;
 };

@@ -72,8 +72,8 @@ bool Board::hasOpponent(int row, int col, Color myColor) const {
 
 void Board::print_board()
 {
-    cout<<endl<< "1 2 3 4 5 6 7 8"<<endl;
-    cout<< "    ----------------"<<endl;
+    cout<<endl<< "   1 2 3 4 5 6 7 8"<<endl;
+    cout<< "   ---------------"<<endl;
     for(int i=0; i<8; i++)
     {
         cout<< (8-i) <<"| ";
@@ -90,6 +90,6 @@ void Board::print_board()
         }
         cout<< "|" << (8-i) <<endl;
     }
-    cout<< "     -----------------"<<endl;
-    cout<<endl<< "1 2 3 4 5 6 7 8"<<endl<<endl;
+    cout<< "   ---------------\n";
+    cout<< "   1 2 3 4 5 6 7 8"<<endl;
 }
