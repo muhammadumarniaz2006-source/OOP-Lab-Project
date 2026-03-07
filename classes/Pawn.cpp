@@ -1,11 +1,7 @@
 #include "Pawn.hpp"
 
 
-Pawn::Pawn():Piece()
-{
-    first_move=true;
-    move_two_square=false;
-}
+
 bool Pawn::isvalidmove(int from_row,int from_col,int to_row, int to_col, Board &board)
 {
     int direction;      // direction variable jo batayega pawn upar jayega ya neeche
