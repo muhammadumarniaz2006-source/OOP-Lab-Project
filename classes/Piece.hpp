@@ -35,4 +35,6 @@ public:
     void setBoard(Board* b) {
         board = b;
     }
+
+    virtual string getsymbol()=0;
 };

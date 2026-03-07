@@ -10,4 +10,6 @@ public:
         // Basic Knight logic placeholder
         return true;
     }
+
+    string getsymbol();
 };

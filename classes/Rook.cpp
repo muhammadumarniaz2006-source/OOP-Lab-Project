@@ -26,4 +26,13 @@ bool Rook::isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &bo
     if (!board.isEmpty(toRow, toCol) && !board.hasOpponent(toRow, toCol, color)) { return false; }
     
     return true;
+
+}
+
+string Rook::getsymbol()
+{
+    if (getcolor() == Color::WHITE)
+        return "♖";
+    else
+        return "♜";
 }

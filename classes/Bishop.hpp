@@ -8,4 +8,6 @@ public:
     Bishop(Color c) : Piece(c) {}
 
     bool isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &board) override;
+
+    string getsymbol();
 };
