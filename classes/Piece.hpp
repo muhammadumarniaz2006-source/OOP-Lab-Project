@@ -38,5 +38,7 @@ Piece(){}
     void setBoard(Board* b) {
         board = b;
     }
-     void generateMoves(int row,int col,Board& board);//yai move store karay ga aur next turn mai clear kerday ga
+    void generateMoves(int row,int col,Board& board);//yai move store karay ga aur next turn mai clear kerday ga
+
+    virtual char getsymbol()=0;
 };

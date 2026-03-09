@@ -1,9 +1,10 @@
 #include "classes/Board.hpp"
 #include "classes/Piece.hpp"
 #include <iostream>
-
 using namespace std;
 
+
+//g++ main.cpp classes/*.cpp -o main
 int main() {
     Board board;
     board.initBoard();
@@ -14,6 +15,6 @@ int main() {
     if (board.squares[0][0] != nullptr) {
         cout << "Square (0,0) contains a piece." << endl;
     }
-
+    board.print_board();
     return 0;
 }

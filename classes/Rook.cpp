@@ -29,4 +29,9 @@ bool Rook::isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &bo
     if (!board.isEmpty(toRow, toCol) && !board.hasOpponent(toRow, toCol, color)) { return false; }//ager destination per opponent ka piece na ho ya apna piece bhi hotu usi waqt false reurn kerdo
     
     return true;
+
+}
+
+char Rook::getsymbol(){ 
+    return (getcolor() == Color::WHITE) ? 'R' : 'r'; 
 }

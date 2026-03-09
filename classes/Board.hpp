@@ -17,4 +17,5 @@ public:
     void undoMove(int fr,int fc,int tr,int tc,Piece* capturedPiece);
     bool isEmpty(int row, int col) const;
     bool hasOpponent(int row, int col, Color myColor) const;
+    void print_board();
 };

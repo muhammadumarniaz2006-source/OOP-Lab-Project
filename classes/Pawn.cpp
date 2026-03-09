@@ -1,6 +1,11 @@
 #include "Pawn.hpp"
 
 
+Pawn::Pawn(Color c): Piece(c)
+{
+    first_move=true;
+    move_two_square=false;
+}
 
 bool Pawn::isvalidmove(int from_row,int from_col,int to_row, int to_col, Board &board)
 {
@@ -36,5 +41,11 @@ bool Pawn::isvalidmove(int from_row,int from_col,int to_row, int to_col, Board &
     move_two_square=false;  //caputring hai 2 step movement nhi hai 2 step mai beech hai koi piece nhi hota dono empty hote hain
     return true;
     }
+    return false;
+}
 
+
+
+char Pawn::getsymbol(){
+    return (getcolor() == Color::WHITE) ? 'P' : 'p'; 
 }

@@ -10,4 +10,5 @@ public:
         // Basic King logic placeholder
         return true;
     }
+    char getsymbol();
 };
