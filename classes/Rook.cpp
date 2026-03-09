@@ -1,5 +1,8 @@
 #include "Rook.hpp"
-
+/*Rook logic:
+      row difference and col difference nikal ker dono ko check  karay gay
+    if dono mai say koi aik bhi 0 hai  hai tu valid move hai aur ager destinated position per apna piece  na ho ya uskay rastay mai koi bhi dosra piece ho 
+*/
 bool Rook::isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &board) {
     int rowstep, colstep;
     int rowdiff = fromRow - toRow;
@@ -18,12 +21,12 @@ bool Rook::isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &bo
     int currCol = fromCol + colstep;
     
     while (currRow != toRow || currCol != toCol){
-        if (!board.isEmpty(currRow, currCol)) { return false; }
-        currRow += rowstep;
-        currCol += colstep;
+        if (!board.isEmpty(currRow, currCol)) { return false; }//rastay mai aai har piece ko check ker raha hai kay wo empty ha ya nhi ager empty nhi oa tu false return kerday ga
+        currRow += rowstep;//for next step
+        currCol += colstep;//for next step
     }
     
-    if (!board.isEmpty(toRow, toCol) && !board.hasOpponent(toRow, toCol, color)) { return false; }
+    if (!board.isEmpty(toRow, toCol) && !board.hasOpponent(toRow, toCol, color)) { return false; }//ager destination per opponent ka piece na ho ya apna piece bhi hotu usi waqt false reurn kerdo
     
     return true;
 

@@ -24,7 +24,7 @@ Board::~Board() {
         }
     }
 }
-
+//pices ko  dynamic allocate kia hai takay movement easy hosakay .
 void Board::initBoard() {
     for (int c = 0; c < 8; c++) {
         squares[1][c] = new Pawn(Color::BLACK);
@@ -55,19 +55,39 @@ void Board::initBoard() {
 }
 
 bool Board::isEmpty(int row, int col) const {
-    if (row < 0 || row >= 8 || col < 0 || col >= 8) { return false; }
-    return squares[row][col] == nullptr;
+    if (row < 0 || row >= 8 || col < 0 || col >= 8) { return false; }//for validation inside board.
+    return squares[row][col] == nullptr;//yai true return karay ga ager destination true hoga.
 }
 
 bool Board::hasOpponent(int row, int col, Color myColor) const {
-    if (row < 0 || row >= 8 || col < 0 || col >= 8)
+    if (row < 0 || row >= 8 || col < 0 || col >= 8)//yai validate keray ga kay move board ki boundry mai hai ya nhi.
         return false;
 
     Piece *target = squares[row][col];
-    if (target == nullptr)
+    if (target == nullptr)  //ager us destination per koi piece nhi hai tu return false kerday ga.
         return false;
 
-    return (target->getcolor() != myColor);
+    return (target->getcolor() != myColor);//ager opponent piece hoga tu true return karay ga.
+}
+/*yai function piece ko move kernay aur delete kernay kay liay hai aur iski return type Piece isliay hai kay 
+For example capturedPiece=Rook so function must return address of Rook in form of Piece* */
+ Piece* Board::makeMove(int fr,int fc,int tr,int tc)
+{
+    Piece* movingPiece = squares[fr][fc];
+    Piece* capturedPiece = squares[tr][tc];
+
+    squares[tr][tc] = movingPiece;
+    squares[fr][fc] = nullptr;
+
+    return capturedPiece;
+}
+//jo upper wala function return karay ga captured ko wo ismai use hoga takay move undo kersakay.
+void Board::undoMove(int fr,int fc,int tr,int tc,Piece* capturedPiece)
+{
+    Piece* movingPiece = squares[tr][tc];//pointer isliay return kerwa rahay hai kio kay squares array of 2d pointers hai
+
+    squares[fr][fc] = movingPiece;
+    squares[tr][tc] = capturedPiece;
 }
 
 void Board::print_board()
@@ -92,4 +112,5 @@ void Board::print_board()
     }
 
     cout << "     1   2   3   4   5   6   7   8" << endl;
+
 }
