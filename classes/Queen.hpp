@@ -10,4 +10,5 @@ public:
         // Basic Queen logic placeholder
         return true;
     }
+    char getsymbol();
 };

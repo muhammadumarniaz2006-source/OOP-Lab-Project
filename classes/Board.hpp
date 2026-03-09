@@ -13,4 +13,5 @@ public:
     void initBoard();
     bool isEmpty(int row, int col) const;
     bool hasOpponent(int row, int col, Color myColor) const;
+    void print_board();
 };

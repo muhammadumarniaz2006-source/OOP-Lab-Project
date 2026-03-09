@@ -6,6 +6,7 @@
 #include "Bishop.hpp"
 #include "Queen.hpp"
 #include "King.hpp" 
+using namespace std;
 
 Board::Board() {
     for (int r = 0; r < 8; r++) {
@@ -67,4 +68,28 @@ bool Board::hasOpponent(int row, int col, Color myColor) const {
         return false;
 
     return (target->getcolor() != myColor);
+}
+
+void Board::print_board()
+{
+    string line = "   +---+---+---+---+---+---+---+---+";
+
+    cout << endl << "     1   2   3   4   5   6   7   8" << endl;
+    cout << line << endl;
+
+    for (int i = 0; i < 8; i++)
+    {
+        cout << " " << (8-i) << " |";
+        for (int j = 0; j < 8; j++)
+        {
+            if (squares[i][j] == nullptr)
+                cout << " . |";
+            else
+                cout << " " << squares[i][j]->getsymbol() << " |";
+        }
+        cout << " " << (8-i) << endl;
+        cout << line << endl;
+    }
+
+    cout << "     1   2   3   4   5   6   7   8" << endl;
 }

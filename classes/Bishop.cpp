@@ -20,4 +20,9 @@ bool Bishop::isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &
         currCol += colstep;
     }
     return true;
-} 
+
+}
+
+char Bishop::getsymbol() { 
+  return (getcolor() == Color::WHITE) ? 'B' : 'b'; 
+}

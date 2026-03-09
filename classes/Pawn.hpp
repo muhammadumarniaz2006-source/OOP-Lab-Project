@@ -12,4 +12,5 @@ private:
 public:
     Pawn(Color c);
     bool isvalidmove(int from_row,int from_col,int to_row, int to_col, Board &board);
+    char getsymbol();
 };
