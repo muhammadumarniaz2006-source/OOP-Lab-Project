@@ -13,6 +13,15 @@ struct Pos {
     int y;
 };
 
+class ValidMove {
+    protected:
+        bool isPinned;
+        vector<Pos> possibleMoves;
+    public:
+        ValidMove() : isPinned(false) {}
+        void calculatePossibleMoves();
+};
+
 class Board; // Forward declaration
 
 class Piece {
@@ -23,6 +32,7 @@ protected:
     string name;
 
 public:
+    ValidMove validMove; 
     Piece(Color c) : color(c), board(nullptr) {}
     virtual ~Piece() {}
 
