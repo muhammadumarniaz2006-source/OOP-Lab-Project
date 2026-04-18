@@ -5,11 +5,7 @@
 
 class Knight : public Piece {
 public:
-    Knight(Color c) : Piece(c) {}
-    bool isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &board) override {
-        // Basic Knight logic placeholder
-        return true;
-    }
-
-    char getsymbol();
+    Knight(Pos p, Color c, string name, Board* b);
+    char getSymbol() override;
+    void calculatePossibleMoves() override;
 };

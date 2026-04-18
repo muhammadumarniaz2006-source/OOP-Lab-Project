@@ -5,10 +5,7 @@
 
 class Bishop : public Piece {
 public:
-    Bishop(){}
-    Bishop(Color c) : Piece(c) {}
-
-    bool isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &board) override;
-
-    char getsymbol();
+    Bishop(Pos p, Color c, string name, Board* b);
+    char getSymbol() override;
+    void calculatePossibleMoves() override;
 };

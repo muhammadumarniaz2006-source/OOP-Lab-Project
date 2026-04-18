@@ -5,10 +5,7 @@
 
 class King : public Piece {
 public:
-    King(Color c) : Piece(c) {}
-    bool isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &board) override {
-        // Basic King logic placeholder
-        return true;
-    }
-    char getsymbol();
+    King(Pos p, Color c, string name, Board* b);
+    char getSymbol() override;
+    void calculatePossibleMoves() override;
 };

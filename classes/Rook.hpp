@@ -5,10 +5,7 @@
 
 class Rook : public Piece {
 public:
-    Rook(){}
-    Rook(Color c) : Piece(c) {}
-
-    bool isvalidmove(int fromRow, int fromCol, int toRow, int toCol, Board &board) override;
-
-    char getsymbol();
+    Rook(Pos p, Color c, string name, Board* b);
+    char getSymbol() override;
+    void calculatePossibleMoves() override;
 };

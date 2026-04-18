@@ -1,9 +1,16 @@
 #include "Queen.hpp"
-#include <cmath>
-//bishop ya Rook mai say koi aik bhi true hoga tu queen truen kerday gi.
-bool Queen :: isvalidmove(int from_row,int from_col,int to_row, int to_col, Board &board){
-    return (Bishop::isvalidmove(from_row,from_col,to_row,to_col,board)||Rook::isvalidmove(from_row,from_col,to_row,to_col,board));
+#include "Move.hpp"
 
-char Queen::getsymbol(){ 
+Queen::Queen(Pos p, Color c, string name, Board* b): Piece(p, c, name, b) {
+  Directions = {{1,0}, {0,1}, {-1,0}, {0,-1}, {1,1}, {-1,1}, {1,-1}, {-1,-1}}; //Queen ke possible directions
+  calculatePossibleMoves();
+}
+
+char Queen::getSymbol(){ 
   return (getcolor() == Color::WHITE) ? 'Q' : 'q'; 
+}
+
+void Queen::calculatePossibleMoves() {
+  Possiblemoves.clear();
+  Possiblemoves = MoveGenerator::slidingMove(*board, pos, color, Directions);
 }
