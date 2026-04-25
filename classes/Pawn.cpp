@@ -1,22 +1,22 @@
 #include "Pawn.hpp"
+#include "Board.hpp"
 #include "Move.hpp"
 
-Pawn::Pawn(Pos p, Color c, string name, Board* b): Piece(p, c, name, b) {
-    if(getcolor() == Color::WHITE){
+Pawn::Pawn(Pos p, PieceColor c, string name, Board* b): Piece(p, c, name, b) {
+    if(getcolor() == PieceColor::WHITE_PIECE){
         Directions = {{-1,0}}; //White pawn ke liye direction upar ki taraf hai
     } else {
         Directions = {{1,0}}; //Black pawn ke liye direction neeche ki taraf hai
     }
-    calculatePossibleMoves();
 }
 
 char Pawn::getSymbol(){
-    return (getcolor() == Color::WHITE) ? 'P' : 'p';
+    return (getcolor() == PieceColor::WHITE_PIECE) ? 'P' : 'p';
 }
 
-void Pawn::calculatePossibleMoves() {
+void Pawn::calculatePossibleMoves(bool checkSafety) {
     Possiblemoves.clear();
-    Possiblemoves = MoveGenerator::pawnMove(*board, pos, color, Directions[0], ifFirstMove);
+    Possiblemoves = MoveGenerator::pawnMove(*board, this, checkSafety);
 }
 
 // bool Pawn::isvalidmove(int from_row,int from_col,int to_row, int to_col, Board &board)

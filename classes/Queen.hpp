@@ -1,11 +1,16 @@
 #pragma once
 
 #include "Piece.hpp"
-#include "Board.hpp"
 
-class Queen : public Piece{
+class Board; // Forward declaration
+class MoveGenerator; // Forward declaration
+
+class Queen : public Piece {
+private:
+    friend class MoveGenerator; // Allow MoveGenerator to access private members of Queen
 public:
-    Queen(Pos p, Color c, string name, Board* b);
+    Queen(Pos p, PieceColor c, string name, Board* b);
     char getSymbol() override;
-    void calculatePossibleMoves() override;
+    int getValue() const override { return 9; }
+    void calculatePossibleMoves(bool checkSafety = true) override;
 };

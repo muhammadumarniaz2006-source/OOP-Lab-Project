@@ -179,3 +179,70 @@ After running that, you just type ./chess.exe to run it!
 6. history.
 7. position.
              Game->Board->
+
+
+
+
+
+### Coordinates of Chess explained
+✦ To help you visualize this, think of the board not as a graph, but as a List of Rows (like a spreadsheet or a notebook).
+
+  1. The Visual Map (The "Spreadsheet" View)
+  In your code, x is which Line you are on, and y is which Box in that line you are looking at.
+
+    1        FILES (Columns) -> Mapping to pos.y
+    2        a(0)  b(1)  c(2)  d(3)  e(4)  f(5)  g(6)  h(7)
+    3       +----+----+----+----+----+----+----+----+
+    4 x=0 8 |0,0 |0,1 |0,2 |0,3 |0,4 |0,5 |0,6 |0,7 | 8  <-- BLACK SIDE (Start)
+    5       +----+----+----+----+----+----+----+----+
+    6 x=1 7 |1,0 |1,1 |1,2 |1,3 |1,4 |1,5 |1,6 |1,7 | 7  (Black Pawns)
+    7       +----+----+----+----+----+----+----+----+
+    8 x=2 6 |2,0 |2,1 |2,2 |2,3 |2,4 |2,5 |2,6 |2,7 | 6
+    9       +----+----+----+----+----+----+----+----+
+   10 x=3 5 |3,0 |3,1 |3,2 |3,3 |3,4 |3,5 |3,6 |3,7 | 5
+   11       +----+----+----+----+----+----+----+----+
+   12 x=4 4 |4,0 |4,1 |4,2 |4,3 |4,4 |4,5 |4,6 |4,7 | 4
+   13       +----+----+----+----+----+----+----+----+
+   14 x=5 3 |5,0 |5,1 |5,2 |5,3 |5,4 |5,5 |5,6 |5,7 | 3
+   15       +----+----+----+----+----+----+----+----+
+   16 x=6 2 |6,0 |6,1 |6,2 |6,3 |6,4 |6,5 |6,6 |6,7 | 2  (White Pawns)
+   17       +----+----+----+----+----+----+----+----+
+   18 x=7 1 |7,0 |7,1 |7,2 |7,3 |7,4 |7,5 |7,6 |7,7 | 1  <-- WHITE SIDE (Start)
+   19       +----+----+----+----+----+----+----+----+
+   20        a(0)  b(1)  c(2)  d(3)  e(4)  f(5)  g(6)  h(7)
+
+  ---
+
+  2. The Movement Mind Map
+  Because x=0 is at the top, the directions feel "upside down" compared to math class:
+
+   * Move DOWN (Towards White): x increases (+1).
+   * Move UP (Towards Black): x decreases (-1).
+   * Move RIGHT (Towards 'h'): y increases (+1).
+   * Move LEFT (Towards 'a'): y decreases (-1).
+
+  Pawn Logic Example:
+   * White Pawn: Wants to go "Up" (towards Rank 8). In your code, it moves from x=6 to x=5.
+       * Direction: {-1, 0} (Row decreases).
+   * Black Pawn: Wants to go "Down" (towards Rank 1). In your code, it moves from x=1 to x=2.
+       * Direction: {1, 0} (Row increases).
+
+  ---
+
+  3. Quick Translation Guide
+  If you are debugging and see a coordinate, use this table:
+
+  ┌──────────────────────┬─────────────────────────────┬──────────────────────────────┐
+  │ If you see Pos(x, y) │ Think in Chess...           │ Example                      │
+  ├──────────────────────┼─────────────────────────────┼──────────────────────────────┤
+  │ x                    │ Rank (The horizontal lines) │ x=0 is Rank 8; x=7 is Rank 1 │
+  │ y                    │ File (The vertical columns) │ y=0 is 'a'; y=7 is 'h'       │
+  └──────────────────────┴─────────────────────────────┴──────────────────────────────┘
+
+  The "Magic Formula" used in your Game.cpp:
+   * Array Row (x) = 8 - RankNumber (e.g., Rank 4 becomes 8 - 4 = 4)
+   * Array Col (y) = Char - 'a' (e.g., 'e' becomes 4)
+
+  Why this is actually good:
+  When you write squares[pos.x][pos.y], you are literally saying: "Go to Row X, then find the Y-th piece in that row." This is
+  exactly how the computer stores the data, which makes your code faster and less prone to "index out of bounds" errors!

@@ -1,11 +1,16 @@
 #pragma once
 
 #include "Piece.hpp"
-#include "Board.hpp"
+
+class Board; // Forward declaration
+class MoveGenerator; // Forward declaration
 
 class Rook : public Piece {
+private:
+    friend class MoveGenerator; // Allow MoveGenerator to access private members of Rook
 public:
-    Rook(Pos p, Color c, string name, Board* b);
+    Rook(Pos p, PieceColor c, string name, Board* b);
     char getSymbol() override;
-    void calculatePossibleMoves() override;
+    int getValue() const override { return 5; }
+    void calculatePossibleMoves(bool checkSafety = true) override;
 };

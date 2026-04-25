@@ -1,11 +1,18 @@
 #pragma once
 #include <vector>
-#include "Piece.hpp"
+#include "Common.hpp"
+
+// Forward declarations
+class Board;
+class King;
+class Piece;
+class Knight;
+class Pawn;
 
 class MoveGenerator {
     public:
-        static std::vector<Pos> slidingMove(Board& board, Pos pos, Color color, std::vector<Dir> dirs);
-        static std::vector<Pos> knightMove(Board& board, Pos pos, Color color, std::vector<Dir> dirs);
-        static std::vector<Pos> pawnMove(Board& board, Pos pos, Color color, Dir dir, bool ifFirst);
-        static std::vector<Pos> kingMove(Board& board, Pos pos, Color color, std::vector<Dir> dirs);
+        static std::vector<Pos> slidingMove(Board& board, Piece* piece, bool checkSafety = true);
+        static std::vector<Pos> knightMove(Board& board, Knight* knight, bool checkSafety = true);
+        static std::vector<Pos> pawnMove(Board& board, Pawn* pawn, bool checkSafety = true);
+        static std::vector<Pos> kingMove(Board& board, King& king, bool checkSafety = true);
 };
