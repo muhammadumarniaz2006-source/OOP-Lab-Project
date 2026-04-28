@@ -207,7 +207,6 @@ bool Board::checkPin(Piece* piece, Pos move) {
     // Simulate move (temporarily move piece on board).
     squares[move.x][move.y] = piece;
     squares[originalPos.x][originalPos.y] = nullptr;
-    Pos backupPos = piece->getPos();
     piece->updatePos(move, true); 
     
     bool result = isCheck(piece->getcolor());

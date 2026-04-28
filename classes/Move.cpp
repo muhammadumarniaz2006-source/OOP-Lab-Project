@@ -7,7 +7,7 @@
 // slidingMove: Queen, Rook, aur Bishop ke liye rasta clear hone tak moves calculate karta hai.
 vector<Pos> MoveGenerator::slidingMove(Board& board, Piece* piece, bool checkSafety){
     vector<Pos> moves;
-    for(int i = 0; i < piece->Directions.size(); i++){
+    for(size_t i = 0; i < piece->Directions.size(); i++){
         int j = 1;
         while(true){
             Pos newMove;
@@ -40,7 +40,7 @@ vector<Pos> MoveGenerator::slidingMove(Board& board, Piece* piece, bool checkSaf
 // knightMove: Knight (Ghoray) ki unique 'L' shaped moves calculate karta hai.
 vector<Pos> MoveGenerator::knightMove(Board& board, Knight* knight, bool checkSafety){
     vector<Pos> moves;
-    for(int i = 0; i < knight->Directions.size(); i++){
+    for(size_t i = 0; i < knight->Directions.size(); i++){
         Pos newMove;
         newMove.x = knight->pos.x + knight->Directions[i].x;
         newMove.y = knight->pos.y + knight->Directions[i].y;
@@ -102,7 +102,7 @@ vector<Pos> MoveGenerator::pawnMove(Board& board, Pawn* pawn, bool checkSafety){
 // kingMove: King ki 1-step moves aur Castling (short/long) ki sharait check karke moves deta hai.
 vector<Pos> MoveGenerator::kingMove(Board& board, King& king, bool checkSafety){
     vector<Pos> moves;
-    for(int i = 0; i < king.Directions.size(); i++){
+    for(size_t i = 0; i < king.Directions.size(); i++){
         Pos newMove;
         newMove.x = king.pos.x + king.Directions[i].x;
         newMove.y = king.pos.y + king.Directions[i].y;

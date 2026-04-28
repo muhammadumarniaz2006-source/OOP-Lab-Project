@@ -2,7 +2,7 @@
 #include "../GUI/GUI.hpp"
 
 // Constructor: AI player set karta hai, board initialize karta hai aur GUI loop start karta hai.
-Game::Game() : moveCount(1), fiftyMoveCounter(0), isGameDraw(false), vsComputer(false), currentState(GameState::MENU) {
+Game::Game() : moveCount(1), fiftyMoveCounter(0), isGameDraw(false), currentState(GameState::MENU), vsComputer(false) {
     ai = new AIPlayer("stockfish/stockfish-windows-x86-64-avx2.exe");
     board.initBoard();
     guiLoop();
