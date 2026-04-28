@@ -2,6 +2,10 @@
 #include "Board.hpp"
 #include "Move.hpp"
 
+/**
+ * Pawn: Piyaday (Pawn) ka object banata hai aur iski direction color ke mutabiq set karta hai.
+ * White pawn upar (-1) aur Black pawn neeche (+1) move karta hai.
+ */
 Pawn::Pawn(Pos p, PieceColor c, string name, Board* b): Piece(p, c, name, b) {
     if(getcolor() == PieceColor::WHITE_PIECE){
         Directions = {{-1,0}}; //White pawn ke liye direction upar ki taraf hai
@@ -10,10 +14,18 @@ Pawn::Pawn(Pos p, PieceColor c, string name, Board* b): Piece(p, c, name, b) {
     }
 }
 
+/**
+ * getSymbol: Pawn ka symbol return karta hai ('P' for white, 'p' for black).
+ * Game save karne aur FEN string banane ke liye use hota hai.
+ */
 char Pawn::getSymbol(){
     return (getcolor() == PieceColor::WHITE_PIECE) ? 'P' : 'p';
 }
 
+/**
+ * calculatePossibleMoves: Pawn ki sidhi moves aur diagonal captures (including En Passant) calculate karta hai.
+ * Board state update hone par har turn ke baad call hota hai.
+ */
 void Pawn::calculatePossibleMoves(bool checkSafety) {
     Possiblemoves.clear();
     Possiblemoves = MoveGenerator::pawnMove(*board, this, checkSafety);

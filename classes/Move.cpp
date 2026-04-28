@@ -4,6 +4,7 @@
 #include "Knight.hpp"
 #include "Pawn.hpp"
 
+// slidingMove: Queen, Rook, aur Bishop ke liye rasta clear hone tak moves calculate karta hai.
 vector<Pos> MoveGenerator::slidingMove(Board& board, Piece* piece, bool checkSafety){
     vector<Pos> moves;
     for(int i = 0; i < piece->Directions.size(); i++){
@@ -13,31 +14,30 @@ vector<Pos> MoveGenerator::slidingMove(Board& board, Piece* piece, bool checkSaf
             newMove.x = piece->pos.x + (piece->Directions[i].x * j);
             newMove.y = piece->pos.y + (piece->Directions[i].y * j);
             
-            if(!board.checkBoundary(newMove)){
-                break;
+            if(!board.checkBoundary(newMove)) break;
+            
+            // Cannot capture own piece
+            if(board.hasMate(newMove, piece->color)) break;
+            
+            // If we are checking safety (check/pin), verify if move is legal
+            if(checkSafety) {
+                if(!board.checkPin(piece, newMove)) {
+                    moves.push_back(newMove);
+                }
+            } else {
+                // For attack range calculation, we don't care about pins
+                moves.push_back(newMove);
             }
             
-            if(board.hasMate(newMove, piece->color)){
-                break;
-            }
-            if(checkSafety && board.checkPin(piece, newMove)){
-                // CRITICAL FIX: Even if the move is illegal (pinned), 
-                // if there is a piece here, it BLOCKS the path.
-                if(!board.isEmpty(newMove)) break; 
-                j++; 
-                continue;
-            }
-            moves.push_back(newMove);  
-            
-            if(board.hasOpponent(newMove, piece->color)){
-                break;
-            }
+            // If square is occupied (by opponent or friend), path is blocked
+            if(!board.isEmpty(newMove)) break;
             j++;
         }
     }
     return moves;
 }
 
+// knightMove: Knight (Ghoray) ki unique 'L' shaped moves calculate karta hai.
 vector<Pos> MoveGenerator::knightMove(Board& board, Knight* knight, bool checkSafety){
     vector<Pos> moves;
     for(int i = 0; i < knight->Directions.size(); i++){
@@ -45,110 +45,96 @@ vector<Pos> MoveGenerator::knightMove(Board& board, Knight* knight, bool checkSa
         newMove.x = knight->pos.x + knight->Directions[i].x;
         newMove.y = knight->pos.y + knight->Directions[i].y;
         
-        if(!board.checkBoundary(newMove) || board.hasMate(newMove, knight->color)){
-            continue;
+        if(!board.checkBoundary(newMove)) continue;
+        if(board.hasMate(newMove, knight->color)) continue;
+        
+        if(checkSafety) {
+            if(!board.checkPin(knight, newMove)) moves.push_back(newMove);
+        } else {
+            moves.push_back(newMove);
         }
-        if(checkSafety && board.checkPin(knight, newMove)){
-            continue;
-        }
-        moves.push_back(newMove);
     }
     return moves;
 }
 
+// pawnMove: Pawn ki sidhi movement aur diagonal capturing (samait En Passant) calculate karta hai.
 vector<Pos> MoveGenerator::pawnMove(Board& board, Pawn* pawn, bool checkSafety){
     vector<Pos> moves;
-    // Forward move
-    Pos forward(pawn->pos.x + pawn->Directions[0].x, pawn->pos.y);
-    if(board.checkBoundary(forward) && board.isEmpty(forward)){
-        if(!checkSafety || !board.checkPin(pawn, forward)){
-            moves.push_back(forward);
-        }
-    }
-    // Double forward on first move
-    if(pawn->ifFirstMove){
-        Pos forward1(pawn->pos.x + pawn->Directions[0].x, pawn->pos.y);
-        Pos doubleForward(pawn->pos.x + 2 * pawn->Directions[0].x, pawn->pos.y);
-        if(board.checkBoundary(doubleForward) && board.isEmpty(forward1) && board.isEmpty(doubleForward)){
-            if(!checkSafety || !board.checkPin(pawn, doubleForward)){
-                moves.push_back(doubleForward);
+    
+    // Normal Move Calculation (including safety)
+    if(checkSafety) {
+        // Forward 1
+        Pos forward(pawn->pos.x + pawn->Directions[0].x, pawn->pos.y);
+        if(board.checkBoundary(forward) && board.isEmpty(forward)){
+            if(!board.checkPin(pawn, forward)) moves.push_back(forward);
+            
+            // Forward 2
+            if(pawn->ifFirstMove) {
+                Pos doubleForward(pawn->pos.x + 2 * pawn->Directions[0].x, pawn->pos.y);
+                if(board.checkBoundary(doubleForward) && board.isEmpty(doubleForward)){
+                    if(!board.checkPin(pawn, doubleForward)) moves.push_back(doubleForward);
+                }
             }
         }
-    }
-    // Captures
-    Pos capLeft(pawn->pos.x + pawn->Directions[0].x, pawn->pos.y - 1);
-    if(board.checkBoundary(capLeft) && board.hasOpponent(capLeft, pawn->color)){
-        if(!checkSafety || !board.checkPin(pawn, capLeft)){
-            moves.push_back(capLeft);
+        
+        // Diagonals (Normal captures + En Passant)
+        int cols[] = {pawn->pos.y - 1, pawn->pos.y + 1};
+        for(int c : cols) {
+            Pos diag(pawn->pos.x + pawn->Directions[0].x, c);
+            if(board.checkBoundary(diag)) {
+                if(board.hasOpponent(diag, pawn->color) || diag == board.enPassantTarget) {
+                    if(!board.checkPin(pawn, diag)) moves.push_back(diag);
+                }
+            }
         }
-    }
-    
-    Pos capRight(pawn->pos.x + pawn->Directions[0].x, pawn->pos.y + 1);
-    if(board.checkBoundary(capRight) && board.hasOpponent(capRight, pawn->color)){
-        if(!checkSafety || !board.checkPin(pawn, capRight)){
-            moves.push_back(capRight);
-        }
-    }
-
-    // En Passant Move Generation
-    // Check if either diagonal forward square is the current enPassantTarget
-    Pos epLeft(pawn->pos.x + pawn->Directions[0].x, pawn->pos.y - 1);
-    Pos epRight(pawn->pos.x + pawn->Directions[0].x, pawn->pos.y + 1);
-
-    if (board.checkBoundary(epLeft) && epLeft == board.enPassantTarget) {
-        // En Passant ke liye bhi pin check karna zaroori hai
-        if (!checkSafety || !board.checkPin(pawn, epLeft)) {
-            moves.push_back(epLeft);
-        }
-    }
-    if (board.checkBoundary(epRight) && epRight == board.enPassantTarget) {
-        if (!checkSafety || !board.checkPin(pawn, epRight)) {
-            moves.push_back(epRight);
+    } else {
+        // Only diagonal attacks for isSquareAttacked
+        int cols[] = {pawn->pos.y - 1, pawn->pos.y + 1};
+        for(int c : cols) {
+            Pos diag(pawn->pos.x + pawn->Directions[0].x, c);
+            if(board.checkBoundary(diag)) moves.push_back(diag);
         }
     }
     
     return moves;
 }
 
+// kingMove: King ki 1-step moves aur Castling (short/long) ki sharait check karke moves deta hai.
 vector<Pos> MoveGenerator::kingMove(Board& board, King& king, bool checkSafety){
     vector<Pos> moves;
     for(int i = 0; i < king.Directions.size(); i++){
         Pos newMove;
         newMove.x = king.pos.x + king.Directions[i].x;
         newMove.y = king.pos.y + king.Directions[i].y;
-        if(!board.checkBoundary(newMove) || board.hasMate(newMove, king.color)) continue;
         
-        // Base case: if not checking safety, just add the move (avoids recursion)
-        if(checkSafety && board.kingCheckValidation(king, newMove)) continue;
+        if(!board.checkBoundary(newMove)) continue;
+        if(board.hasMate(newMove, king.color)) continue;
         
-        moves.push_back(newMove);
+        if(checkSafety) {
+            if(!board.kingCheckValidation(king, newMove)) moves.push_back(newMove);
+        } else {
+            moves.push_back(newMove);
+        }
     }
 
-    // Castling Logic
-    // King aur Rook dono ne pehle move na kiya ho, aur rasta khali ho
-    if (checkSafety && king.isFirstMove() && !board.isCheck(king.getcolor())) {
-        int r = king.getPos().x;
+    // Castling Logic (Only if checking safety)
+    if (checkSafety && king.ifFirstMove && !board.isCheck(king.color)) {
+        int r = king.pos.x;
+        PieceColor opponent = (king.color == PieceColor::WHITE_PIECE ? PieceColor::BLACK_PIECE : PieceColor::WHITE_PIECE);
         
-        // 1. King-side Castling (Short)
-        Piece* rookShort = board.getSquare(r, 7);
-        if (rookShort != nullptr && rookShort->isFirstMove()) {
-            // Beech ke squares khali aur safe honay chahiyen
-            if (board.isEmpty(Pos(r, 5)) && board.isEmpty(Pos(r, 6))) {
-                if (!board.isSquareAttacked(Pos(r, 5), (king.getcolor() == PieceColor::WHITE_PIECE ? PieceColor::BLACK_PIECE : PieceColor::WHITE_PIECE)) &&
-                    !board.isSquareAttacked(Pos(r, 6), (king.getcolor() == PieceColor::WHITE_PIECE ? PieceColor::BLACK_PIECE : PieceColor::WHITE_PIECE))) {
-                    moves.push_back(Pos(r, 6));
-                }
+        // King-side
+        Piece* r1 = board.getSquare(r, 7);
+        if (r1 && r1->isFirstMove() && board.isEmpty(Pos(r, 5)) && board.isEmpty(Pos(r, 6))) {
+            if (!board.isSquareAttacked(Pos(r, 5), opponent) && !board.isSquareAttacked(Pos(r, 6), opponent)) {
+                moves.push_back(Pos(r, 6));
             }
         }
-
-        // 2. Queen-side Castling (Long)
-        Piece* rookLong = board.getSquare(r, 0);
-        if (rookLong != nullptr && rookLong->isFirstMove()) {
-            if (board.isEmpty(Pos(r, 1)) && board.isEmpty(Pos(r, 2)) && board.isEmpty(Pos(r, 3))) {
-                if (!board.isSquareAttacked(Pos(r, 2), (king.getcolor() == PieceColor::WHITE_PIECE ? PieceColor::BLACK_PIECE : PieceColor::WHITE_PIECE)) &&
-                    !board.isSquareAttacked(Pos(r, 3), (king.getcolor() == PieceColor::WHITE_PIECE ? PieceColor::BLACK_PIECE : PieceColor::WHITE_PIECE))) {
-                    moves.push_back(Pos(r, 2));
-                }
+        
+        // Queen-side
+        Piece* r2 = board.getSquare(r, 0);
+        if (r2 && r2->isFirstMove() && board.isEmpty(Pos(r, 1)) && board.isEmpty(Pos(r, 2)) && board.isEmpty(Pos(r, 3))) {
+            if (!board.isSquareAttacked(Pos(r, 2), opponent) && !board.isSquareAttacked(Pos(r, 3), opponent)) {
+                moves.push_back(Pos(r, 2));
             }
         }
     }

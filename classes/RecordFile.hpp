@@ -15,14 +15,16 @@ struct SaveEntry {
 
 class RecordFile {
 public:
-    // Saves current board state and move count to a file
+    // Poori game ki state (board, moves, pieces) ko file mein mehfooz karta hai.
     static bool saveGame(const Board& board, int moveCount, bool vsComputer, string filename);
     
-    // Loads board state and move count from a file
+    // Save ki hui file se game wapis restore karta hai.
     static bool loadGame(Board& board, int& moveCount, bool& vsComputer, string filename);
 
-    // Helpers for timestamped saves
+    // Har save file ke liye waqt ke mutabiq anokha naam banata hai.
     static std::string generateTimestampName();
+    // Index file ko update karta hai takay list dikhai ja sakay.
     static void updateIndex(std::string filename, bool vsComputer);
+    // Saved games ki mukammal list return karta hai.
     static std::vector<SaveEntry> getSavedGamesList();
 };

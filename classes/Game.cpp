@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include "../GUI/GUI.hpp"
 
+// Constructor: AI player set karta hai, board initialize karta hai aur GUI loop start karta hai.
 Game::Game() : moveCount(1), fiftyMoveCounter(0), isGameDraw(false), vsComputer(false), currentState(GameState::MENU) {
     ai = new AIPlayer("stockfish/stockfish-windows-x86-64-avx2.exe");
     board.initBoard();
@@ -18,6 +19,7 @@ void Game::checkDrawConditions() {
     }
 }
 
+// guiLoop: Yeh function game ka main engine hai. Har frame par input leta hai aur screen update karta hai.
 void Game::guiLoop() {
     GUI gui(board);
     currentState = GameState::MENU;
@@ -63,7 +65,7 @@ void Game::guiLoop() {
             if (gui.isButtonClicked(gui.btnPvC)) {
                 currentState = GameState::DIFFICULTY_SELECTION;
             }
-            if (IsKeyPressed(KEY_ESCAPE)) currentState = GameState::MENU;
+            if (IsKeyPressed(KEY_ESCAPE) || gui.isButtonClicked(gui.btnBack)) currentState = GameState::MENU;
         }
         else if (currentState == GameState::DIFFICULTY_SELECTION) {
             gui.drawDifficultySelection();
@@ -81,7 +83,7 @@ void Game::guiLoop() {
                 history.clear();
                 currentState = GameState::PLAYING;
             }
-            if (IsKeyPressed(KEY_ESCAPE)) currentState = GameState::MODE_SELECTION;
+            if (IsKeyPressed(KEY_ESCAPE) || gui.isButtonClicked(gui.btnBack)) currentState = GameState::MODE_SELECTION;
         }
         else if (currentState == GameState::PLAYING) {
             currentTurn = (moveCount % 2 == 1) ? PieceColor::WHITE_PIECE : PieceColor::BLACK_PIECE;
@@ -128,11 +130,11 @@ void Game::guiLoop() {
                     currentState = GameState::PLAYING;
                 }
             }
-            if (IsKeyPressed(KEY_ESCAPE)) currentState = GameState::MENU;
+            if (IsKeyPressed(KEY_ESCAPE) || gui.isButtonClicked(gui.btnBack)) currentState = GameState::MENU;
         }
         else if (currentState == GameState::ABOUT) {
             gui.drawAbout();
-            if (IsKeyPressed(KEY_ESCAPE)) currentState = GameState::MENU;
+            if (IsKeyPressed(KEY_ESCAPE) || gui.isButtonClicked(gui.btnBack)) currentState = GameState::MENU;
         }
 
         EndDrawing();

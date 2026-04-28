@@ -12,8 +12,7 @@
 #include <sstream>
 
 /**
- * Timestamp generate karta hai (Format: Save_2024-04-25_14-30-00.txt)
- * @return: Unique file name based on current time
+ * generateTimestampName: Unique file name banata hai (jesay Save_2024-04-25_14-30-00.txt).
  */
 std::string RecordFile::generateTimestampName() {
     auto t = std::time(nullptr);
@@ -24,9 +23,7 @@ std::string RecordFile::generateTimestampName() {
 }
 
 /**
- * Index file ko update karta hai takay list dikhana asaan ho
- * @param filename: Save ki gayi file ka path
- * @param vsComputer: Game mode (Computer ke khilaf ya nahi)
+ * updateIndex: Index file mein nayi save entry ka naam aur waqt likhta hai.
  */
 void RecordFile::updateIndex(std::string filename, bool vsComputer) {
     ofstream file("saves/index.txt", ios::app); // Append mode: purani entries delete nahi hongi
@@ -43,8 +40,7 @@ void RecordFile::updateIndex(std::string filename, bool vsComputer) {
 }
 
 /**
- * Index file se saari saved games ki list parhta hai
- * @return: SaveEntry objects ka vector
+ * getSavedGamesList: Saari purani saved games ki detail vector mein load karta hai.
  */
 std::vector<SaveEntry> RecordFile::getSavedGamesList() {
     std::vector<SaveEntry> entries;
@@ -63,11 +59,7 @@ std::vector<SaveEntry> RecordFile::getSavedGamesList() {
 }
 
 /**
- * Poori game ki state ko file mein save karta hai
- * @param board: Board object (Current pieces state)
- * @param moveCount: Current turn count
- * @param vsComputer: Game mode flag
- * @param filename: Custom path ya khali string (for auto-timestamp)
+ * saveGame: Board ki state, pieces ki positions aur baqi detail file mein mehfooz karta hai.
  */
 bool RecordFile::saveGame(const Board& board, int moveCount, bool vsComputer, string filename) {
     if (filename == "") {
@@ -108,9 +100,7 @@ bool RecordFile::saveGame(const Board& board, int moveCount, bool vsComputer, st
 }
 
 /**
- * Save ki hui file se data load karke board ko restore karta hai
- * @param board/moveCount/vsComputer: Reference variables to update
- * @param filename: Path of the file to load
+ * loadGame: File se data parh kar board ko bilkul waisa hi kar deta hai jaisa save ke waqt tha.
  */
 bool RecordFile::loadGame(Board& board, int& moveCount, bool& vsComputer, string filename) {
     ifstream file(filename);

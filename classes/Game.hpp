@@ -42,12 +42,20 @@ class Game{
 
         void checkDrawConditions();
     public:
+        // Game ki main loop jo logic aur rendering ko handle karti hai.
         void gameLoop();
+        // GUI version ki main loop (Raylib ke saath).
         void guiLoop();
+        // Game ka constructor: components initialize karta hai.
         Game();
+        // Destructor: AI aur resources saaf karta hai.
         ~Game();
+        // Main menu dikhane ka function.
         void menu();
+        // Game state ko file mein save karta hai.
         void saveGame();
+        // Purani save ki hui game load karta hai.
         void loadGame();
-        void undoMove(); // Undo karne ka function
-};
+        // Pichli move ko wapis (Undo) karne ka function.
+        void undoMove(); 
+    };

@@ -19,57 +19,53 @@ private:
     int offsetX;
     int offsetY;
     
-    std::map<std::string, Texture2D> textures;
+    std::map<std::string, Texture2D> textures; // Pieces ki images store karne ke liye
     
-    Pos selectedPos;
-    bool pieceSelected;
-    std::vector<Pos> validMoves;
+    Pos selectedPos;           // Konsa piece select kiya gaya hai
+    bool pieceSelected;        // Kya koi piece selected hai?
+    std::vector<Pos> validMoves; // Selected piece ki valid moves
     PieceColor currentTurn;
-
-    // Layout members
-    int panelWidth;
-    int panelGap;
-
-    // Promotion state
     bool showPromotionMenu;
-    PieceColor promotionColor;
-    char promotionChoice;
 
     // Internal Drawing Functions
-    void loadTextures();
-    void drawBoard();
-    void drawPieces();
-    void drawHighlights();
-    void drawScores(PieceColor currentTurn);
+    void loadTextures();       // Images load karta hai
+    void drawBoard();          // Board draw karta hai
+    void drawPieces();         // Pieces draw karta hai
+    void drawHighlights();      // Selected piece aur moves highlight karta hai
+    void drawScores(PieceColor currentTurn); // Score aur Turn dikhata hai
     void drawPromotionMenu();
-    void recalculateDimensions();
-    void drawButton(Rectangle rect, const char* text, Color baseColor);
+    void recalculateDimensions(); // Screen size adjust karta hai
+    void drawButton(Rectangle rect, const char* text, Color baseColor); // Button banata hai
 
-    Pos getBoardPos(Vector2 mousePos);
-    std::string getPieceResourceName(Piece* piece);
+    Pos getBoardPos(Vector2 mousePos); // Mouse coord ko board pos mein badalta hai
+    std::string getPieceResourceName(Piece* piece); // Piece ki texture ka naam
 
 public:
     GUI(Board& b);
     ~GUI();
     
-    // Menu button regions (Public for Game.cpp)
+    // Menu buttons (Game.cpp inhein check karta hai)
     Rectangle btnNewGame, btnLoadGame, btnHowToPlay, btnAbout, btnQuit;
     Rectangle btnPvP, btnPvC;
     Rectangle btnEasy, btnMedium, btnHard, btnExpert;
+    Rectangle btnBack;
+    
+    // Check karta hai ke button click hua ya nahi
     bool isButtonClicked(Rectangle rect);
 
-    // Menu rendering functions
+    // Mukhtalif screens draw karne ke functions
     void drawMenu();
     void drawModeSelection();
     void drawDifficultySelection();
     void drawAbout();
     void drawLoadList(const std::vector<SaveEntry>& entries, int& selectedIndex);
 
-    // Returns true if a move was made
+    // Input update aur rendering
     bool update(PieceColor currentTurn, Pos& outFrom, Pos& outTo);
     void render(PieceColor currentTurn);
     bool shouldClose();
 
+    // Pawn promotion ka intikhab
     char getPromotionChoice(PieceColor color);
 };
 

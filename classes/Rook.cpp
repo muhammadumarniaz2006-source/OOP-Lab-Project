@@ -6,14 +6,23 @@
     if dono mai say koi aik bhi 0 hai  hai tu valid move hai aur ager destinated position per apna piece  na ho ya uskay rastay mai koi bhi dosra piece ho 
 */
 
+/**
+ * Rook: Haathi (Rook) ka object banata hai aur iski horizontal/vertical directions set karta hai.
+ */
 Rook::Rook(Pos p, PieceColor c, string name, Board* b): Piece(p, c, name, b) {
   Directions = {{1,0}, {0,1}, {-1,0}, {0,-1}}; //Rook ke possible directions
 }
 
+/**
+ * getSymbol: Rook ka symbol return karta hai ('R' for white, 'r' for black).
+ */
 char Rook::getSymbol(){ 
     return (getcolor() == PieceColor::WHITE_PIECE) ? 'R' : 'r'; 
 }
 
+/**
+ * calculatePossibleMoves: Rook ki sidhi (sliding) moves calculate karta hai.
+ */
 void Rook::calculatePossibleMoves(bool checkSafety) {
   Possiblemoves.clear();
   Possiblemoves = MoveGenerator::slidingMove(*board, this, checkSafety);

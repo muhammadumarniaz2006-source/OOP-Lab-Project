@@ -24,11 +24,26 @@ Report your daily work with day number in your own .md file.
 
 # How to Run the Project
 
-## 1. Console Version (Standard)
-If you haven't set up the GUI library yet, you can run the text-based version:
-1. Open your terminal in the project folder.
-2. Compile: `g++ main.cpp classes/*.cpp -o main.exe`
-3. Run: `./main.exe`
+## 1. GUI Version (Recommended)
+This version includes a full graphical interface, Stockfish AI integration, and interactive promotion menus.
+
+**Compilation Command:**
+```bash
+g++ -I. main.cpp classes/*.cpp GUI/GUI.cpp -o chess.exe -I./raylib/include -L./raylib/lib -lraylib -lopengl32 -lgdi32 -lwinmm
+```
+
+**Run:**
+```bash
+./chess.exe
+```
+
+## 2. Features
+*   **Interactive UI**: Full board rendering with smooth piece movement.
+*   **Stockfish AI**: Integrated Stockfish engine for "Player vs Computer" mode with multiple difficulty levels.
+*   **Promotion Menu**: Visual selection for pawn promotion (Queen, Rook, Bishop, Knight).
+*   **Check/Checkmate Alerts**: Real-time visual indicators for Check and Checkmate states.
+*   **Save/Load System**: Save your progress anytime and resume later.
+*   **Valid Move Highlights**: Highlights possible moves for the selected piece.
 
 ---
 
